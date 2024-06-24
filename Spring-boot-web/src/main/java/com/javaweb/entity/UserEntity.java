@@ -2,7 +2,6 @@ package com.javaweb.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,4 +41,8 @@ public class UserEntity extends BaseEntity {
 
     @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
     private List<BuildingEntity> buildings = new ArrayList<>();
+
+    @ManyToMany (fetch = FetchType.LAZY, mappedBy = "users")
+    private List<CustomerEntity> customers = new ArrayList<>();
+
 }

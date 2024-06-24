@@ -16,13 +16,13 @@
             <ul class="breadcrumb">
                 <li>
                     <i class="ace-icon fa fa-home home-icon"></i>
-                    <a href="#">Home</a>
+                    <a href="<c:url value="/admin/home"/>">Home</a>
                 </li>
 
                 <li>
-                    <a href="#">UI &amp; Elements</a>
+                    <a href="#">Building Details</a>
                 </li>
-                <li class="active">Content Sliders</li>
+<%--                <li class="active">Content Sliders</li>--%>
             </ul><!-- /.breadcrumb -->
 
             <div class="nav-search" id="nav-search">

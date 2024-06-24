@@ -1,6 +1,6 @@
 package com.javaweb.api.admin;
 
-import com.javaweb.model.dto.AssignmentBuildingDTO;
+import com.javaweb.model.dto.AssignmentDTO;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.model.response.StaffResponseDTO;
@@ -41,8 +41,8 @@ public class BuildingAPI {
 
     //Update List staff manage the building
     @PutMapping
-    public void updateAssignmentBuilding(@RequestBody AssignmentBuildingDTO assignmentBuildingDTO){
-        buildingService.updateAssignmentBuilding(assignmentBuildingDTO);
+    public void updateAssignmentBuilding(@RequestBody AssignmentDTO assignmentDTO){
+        buildingService.updateAssignmentBuilding(assignmentDTO);
     }
 
     // delete list buildings

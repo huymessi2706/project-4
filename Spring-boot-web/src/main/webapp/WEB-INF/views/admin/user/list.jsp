@@ -10,7 +10,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>
         <%--<spring:message code="label.user.list"/>--%>
-        Danh sách người dùng
+        List users
     </title>
 </head>
 
@@ -31,12 +31,12 @@
                         <i class="ace-icon fa fa-home home-icon"></i>
                         <a href="<c:url value="/admin/home"/>">
                                 <%--<spring:message code="label.home"/>--%>
-                            Trang chủ
+                            Home
                         </a>
                     </li>
                     <li class="active">
                             <%--<spring:message code="label.user.list"/>--%>
-                        Danh sách người dùng
+                        List users
                     </li>
                 </ul>
                 <!-- /.breadcrumb -->

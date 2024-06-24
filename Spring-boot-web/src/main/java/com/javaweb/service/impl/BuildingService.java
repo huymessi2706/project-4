@@ -3,17 +3,16 @@ package com.javaweb.service.impl;
 import com.javaweb.converter.BuildingConverter;
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.entity.UserEntity;
-import com.javaweb.model.dto.AssignmentBuildingDTO;
+import com.javaweb.model.dto.AssignmentDTO;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.repository.BuildingRepository;
-import com.javaweb.repository.RentAreaRepository;
 import com.javaweb.repository.UserRepository;
 import com.javaweb.service.IBuildingService;
 import com.javaweb.utils.UploadFileUtils;
+import lombok.AllArgsConstructor;
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.acls.model.NotFoundException;
 import org.springframework.stereotype.Service;
@@ -22,22 +21,13 @@ import java.io.File;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class BuildingService implements IBuildingService {
 
-    @Autowired
-    private BuildingRepository buildingRepository;
-
-    @Autowired
-    private BuildingConverter buildingConverter;
-
-    @Autowired
-    private RentAreaRepository rentAreaRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private UploadFileUtils uploadFileUtils;
+    private final BuildingRepository buildingRepository;
+    private final BuildingConverter buildingConverter;
+    private final UserRepository userRepository;
+    private final UploadFileUtils uploadFileUtils;
 
     @Override
     public BuildingDTO getBuildingById(Long id) {
@@ -79,9 +69,9 @@ public class BuildingService implements IBuildingService {
 
     @Override
     @Transactional
-    public void updateAssignmentBuilding(AssignmentBuildingDTO assignmentBuilding) {
+    public void updateAssignmentBuilding(AssignmentDTO assignmentBuilding) {
         List<UserEntity> staffs = userRepository.findByIdIn(assignmentBuilding.getStaffs());
-        BuildingEntity buildingEntity = buildingRepository.findById(assignmentBuilding.getBuildingId()).get();
+        BuildingEntity buildingEntity = buildingRepository.findById(assignmentBuilding.getId()).get();
         buildingEntity.setUsers(staffs);
         buildingRepository.save(buildingEntity);
     }

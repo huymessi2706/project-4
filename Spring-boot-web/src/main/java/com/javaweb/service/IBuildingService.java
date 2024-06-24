@@ -1,6 +1,6 @@
 package com.javaweb.service;
 
-import com.javaweb.model.dto.AssignmentBuildingDTO;
+import com.javaweb.model.dto.AssignmentDTO;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
@@ -13,6 +13,6 @@ public interface IBuildingService {
     List<BuildingSearchResponse> getAllBuildings(BuildingSearchRequest building, Pageable pageable);
     void saveBuilding(BuildingDTO building);
     void deleteBuildings(List<Long> ids);
-    void updateAssignmentBuilding(AssignmentBuildingDTO assignmentBuilding);
+    void updateAssignmentBuilding(AssignmentDTO assignmentBuilding);
     int countTotalItems();
 }

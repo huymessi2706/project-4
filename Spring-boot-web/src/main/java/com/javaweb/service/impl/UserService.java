@@ -9,6 +9,7 @@ import com.javaweb.entity.UserEntity;
 import com.javaweb.exception.MyException;
 import com.javaweb.model.response.StaffResponseDTO;
 import com.javaweb.repository.BuildingRepository;
+import com.javaweb.repository.CustomerRepository;
 import com.javaweb.repository.RoleRepository;
 import com.javaweb.repository.UserRepository;
 import com.javaweb.service.IUserService;
@@ -40,6 +41,9 @@ public class UserService implements IUserService {
 
     @Autowired
     private BuildingRepository buildingRepository;
+
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @Override
     public UserDTO findOneByUserNameAndStatus(String name, int status) {
@@ -96,6 +100,21 @@ public class UserService implements IUserService {
     public List<StaffResponseDTO> getListStaffsAndAssignmentStaffs(Long buildingId) {
         List<StaffResponseDTO> response = new ArrayList<>();
         List<UserEntity> assignmentStaffs = buildingRepository.getOne(buildingId).getUsers();
+        Map<Long, String> staffList = getStaffs();
+
+        for (Map.Entry<Long, String> item : staffList.entrySet()) {
+            if (assignmentStaffs.contains(userRepository.getOne(item.getKey())))
+                response.add(new StaffResponseDTO(item.getValue(), item.getKey(), "checked"));
+            else
+                response.add(new StaffResponseDTO(item.getValue(), item.getKey(), ""));
+        }
+        return response;
+    }
+
+    @Override
+    public List<StaffResponseDTO> getListStaffsManageCustomer(Long customerId) {
+        List<StaffResponseDTO> response = new ArrayList<>();
+        List<UserEntity> assignmentStaffs = customerRepository.getOne(customerId).getUsers();
         Map<Long, String> staffList = getStaffs();
 
         for (Map.Entry<Long, String> item : staffList.entrySet()) {
