@@ -1,5 +1,6 @@
 package com.javaweb.service;
 
+import com.javaweb.entity.BuildingEntity;
 import com.javaweb.model.dto.AssignmentDTO;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
@@ -15,4 +16,5 @@ public interface IBuildingService {
     void deleteBuildings(List<Long> ids);
     void updateAssignmentBuilding(AssignmentDTO assignmentBuilding);
     int countTotalItems();
+    BuildingEntity findBuildingById(Long id);
 }

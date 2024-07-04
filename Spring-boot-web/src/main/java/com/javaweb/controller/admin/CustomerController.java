@@ -9,6 +9,7 @@ import com.javaweb.model.request.CustomerSearchRequest;
 import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.service.ICustomerService;
 import com.javaweb.service.IUserService;
+import com.javaweb.service.impl.RoleService;
 import com.javaweb.service.impl.TransactionService;
 import com.javaweb.utils.DisplayTagUtils;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,7 @@ public class CustomerController {
     private final ICustomerService customerService;
     private final IUserService userService;
     private final TransactionService transactionService;
+    private final RoleService roleService;
 
     @GetMapping(value = "/admin/customer-list")
     public ModelAndView customerList(@ModelAttribute("searchModel") CustomerSearchRequest customerSearchRequest, HttpServletRequest request) {
@@ -60,6 +62,12 @@ public class CustomerController {
     @GetMapping(value = "/admin/customer-edit-{id}")
     public ModelAndView customerEdit(@PathVariable("id") Long id) {
         ModelAndView mav = new ModelAndView("admin/customer/edit");
+
+        if(SecurityUtils.getAuthorities().contains("ROLE_STAFF")){
+            if(!userService.findUserEntityById(SecurityUtils.getPrincipal().getId()).getCustomers().contains(customerService.getCustomerById(id))) {
+                return new ModelAndView("redirect:/admin/customer-list");
+            }
+        }
 
         CustomerEntity customer = customerService.getCustomerById(id);
 

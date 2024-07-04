@@ -5,6 +5,7 @@ import com.javaweb.model.dto.RoleDTO;
 import com.javaweb.entity.RoleEntity;
 import com.javaweb.repository.RoleRepository;
 import com.javaweb.service.IRoleService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +15,11 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@AllArgsConstructor
 public class RoleService implements IRoleService {
-	
-	@Autowired
-	private RoleRepository roleRepository;
-	
-	@Autowired
-	private RoleConverter roleConverter;
+
+	private final RoleRepository roleRepository;
+	private final RoleConverter roleConverter;
 
 	@Override
 	public List<RoleDTO> findAll() {
@@ -42,5 +41,10 @@ public class RoleService implements IRoleService {
 			roleTerm.put(roleDTO.getCode(), roleDTO.getName());
 		}
 		return roleTerm;
+	}
+
+	@Override
+	public RoleEntity getRole(String roleName) {
+		return roleRepository.findOneByCode(roleName);
 	}
 }

@@ -13,6 +13,7 @@ import com.javaweb.repository.CustomerRepository;
 import com.javaweb.repository.RoleRepository;
 import com.javaweb.repository.UserRepository;
 import com.javaweb.service.IUserService;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,25 +26,15 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
+@AllArgsConstructor
 public class UserService implements IUserService {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private UserConverter userConverter;
-
-    @Autowired
-    private BuildingRepository buildingRepository;
-
-    @Autowired
-    private CustomerRepository customerRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserConverter userConverter;
+    private final BuildingRepository buildingRepository;
+    private final CustomerRepository customerRepository;
 
     @Override
     public UserDTO findOneByUserNameAndStatus(String name, int status) {

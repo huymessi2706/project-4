@@ -95,4 +95,9 @@ public class BuildingService implements IBuildingService {
     public int countTotalItems() {
         return buildingRepository.countTotalItems();
     }
+
+    @Override
+    public BuildingEntity findBuildingById(Long id) {
+        return buildingRepository.findById(id).get();
+    }
 }

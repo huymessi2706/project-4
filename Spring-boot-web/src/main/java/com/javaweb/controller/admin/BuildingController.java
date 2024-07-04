@@ -9,6 +9,7 @@ import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.service.IBuildingService;
 import com.javaweb.service.IUserService;
 import com.javaweb.utils.DisplayTagUtils;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -20,13 +21,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller(value="buildingControllerOfAdmin")
+@AllArgsConstructor
 public class BuildingController {
 
-    @Autowired
-    private IUserService userService;
-
-    @Autowired
-    private IBuildingService buildingService;
+    private final IUserService userService;
+    private final IBuildingService buildingService;
 
     @GetMapping(value="/admin/building-list")
     public ModelAndView buildingList(@ModelAttribute("searchModel")BuildingSearchRequest buildingSearchRequest, HttpServletRequest request) {
@@ -62,6 +61,13 @@ public class BuildingController {
     @GetMapping(value="/admin/building-edit-{id}")
     public ModelAndView buildingEditById(@PathVariable Long id) {
         ModelAndView mav = new ModelAndView("admin/building/edit");
+
+        if(SecurityUtils.getAuthorities().contains("ROLE_STAFF")){
+            if(!userService.findUserEntityById(SecurityUtils.getPrincipal().getId()).getBuildings().contains(buildingService.findBuildingById(id))) {
+                return new ModelAndView("redirect:/admin/building-list");
+            }
+        }
+
         BuildingDTO buildingDTO = buildingService.getBuildingById(id);
 
         mav.addObject("editModel", buildingDTO);
